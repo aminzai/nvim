@@ -68,11 +68,11 @@ end
 set_keymap('n', '<leader>q', '<cmd>q<CR>')
 
 -- Tab Page
-set_keymap('n', 'tn', '<cmd><C-u>tabnew<CR>')
-set_keymap('n', 'te', '<cmd><C-u>Texplore<CR>')
-set_keymap('n', 'th', '<cmd><C-u>tabprev<CR>')
-set_keymap('n', 'tl', '<cmd><C-u>tabnext<CR>')
-set_keymap('n', 'tc', '<cmd><C-u>tabclose<CR>')
+set_keymap('n', 'tn', '<cmd>tabnew<CR>')
+set_keymap('n', 'te', '<cmd>Texplore<CR>')
+set_keymap('n', 'th', '<cmd>tabprev<CR>')
+set_keymap('n', 'tl', '<cmd>tabnext<CR>')
+set_keymap('n', 'tc', '<cmd>tabclose<CR>')
 
 -- Shift Tab
 set_keymap('n','<tab>', 'v>')
