@@ -5,6 +5,7 @@
   "cmp-nvim-lua": { "branch": "main", "commit": "f3491638d123cfd2c8048aefaf66d246ff250ca6" },
   "cmp-path": { "branch": "main", "commit": "91ff86cd9c29299a64f968ebb45846c485725f23" },
   "cmp_luasnip": { "branch": "master", "commit": "18095520391186d634a0045dacaa346291096566" },
+  "cscope.nvim": { "branch": "master", "commit": "a9abe5202356a579649fdc3c6256d3096f6d353d" },
   "ctrlp.vim": { "branch": "master", "commit": "8b4a9523632049b3b373de1233bef346073b8982" },
   "editorconfig-vim": { "branch": "master", "commit": "7f4e4dfc58c480d154116614e616d90aac77204d" },
   "friendly-snippets": { "branch": "main", "commit": "8d91ba2dc2421a54981115f61b914974f938fa77" },
