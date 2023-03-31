@@ -124,12 +124,15 @@ require("lazy").setup(
             end,
         },
         {
-            'vim-airline/vim-airline',
-            lazy = false,
-            dependencies = {
-                'vim-airline/vim-airline-themes',
-            },
-            config = function()
+            'nvim-lualine/lualine.nvim',
+            config = function ()
+                require('lualine').setup(
+                    {
+                        options = {
+                            theme = 'material',
+                        }
+                    }
+                )
             end,
         },
         { "nvim-tree/nvim-web-devicons", lazy = false},
