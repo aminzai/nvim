@@ -29,7 +29,7 @@ vim.opt.cindent=true
 --Show Row & Colume position
 vim.opt.ruler=true
 --Support mouse
-vim.opt.mouse=a
+vim.opt.mouse='a'
 -- Hightlight in Search
 vim.opt.hlsearch=true
 vim.opt.incsearch=true  -- Incremental Search 輸入字串就顯示匹配點
