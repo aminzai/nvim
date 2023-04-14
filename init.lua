@@ -182,25 +182,6 @@ require("lazy").setup(
         'editorconfig/editorconfig-vim',
         'tpope/vim-fugitive',
         {
-            "williamboman/mason.nvim",
-            build = ":MasonUpdate", -- :MasonUpdate updates registry contents
-            dependencies = {
-                'neovim/nvim-lspconfig',
-                'williamboman/mason-lspconfig.nvim',
-            },
-            config = function()
-                require("mason").setup()
-            end,
-
-        },
-        {
-            'neovim/nvim-lspconfig',
-            config = function()
-                local lsp = require('lspconfig')
-                lsp.pyright.setup {}
-            end,
-        },
-        {
             'VonHeikemen/lsp-zero.nvim',
             branch = 'v1.x',
             dependencies = {
@@ -229,6 +210,16 @@ require("lazy").setup(
                 -- (Optional) Configure lua language server for neovim
                 lsp.nvim_workspace()
                 lsp.setup()
+                require("mason-lspconfig").setup {
+                    ensure_installed = {
+                        'dockerls',
+                        'html',
+                        'jdtls',
+                        'jsonls',
+                        'pyright',
+                        'yamlls',
+                    },
+                }
             end,
 
 
@@ -300,6 +291,79 @@ require("lazy").setup(
             "ellisonleao/glow.nvim",
             config = true,
             cmd = "Glow"
+        },
+        {
+                'nvim-telescope/telescope.nvim',
+                branch = '0.1.x',
+                dependencies = {
+                    'nvim-lua/plenary.nvim'
+                },
+                config = function ()
+                    local builtin = require('telescope.builtin')
+                    vim.keymap.set('n', '<leader>ff', builtin.find_files, {})
+                    vim.keymap.set('n', '<leader>fg', builtin.live_grep, {})
+                    vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
+                    vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
+                end
+        },
+        {
+            'mfussenegger/nvim-jdtls',
+            dependencies = {
+                'mfussenegger/nvim-dap',
+            },
+            config = function()
+                local opts = {}
+                local pkg_status, jdtls = pcall(require,"jdtls")
+                if not pkg_status then
+                    vim.notify("unable to load nvim-jdtls", "error")
+                    return {}
+                end
+                -- local jdtls_path = vim.fn.stdpath("data") .. "/mason/packages/jdtls"
+                local jdtls_bin = vim.fn.stdpath("data") .. "/mason/bin/jdtls"
+                local root_markers = { ".gradle", "gradlew", ".git" }
+                local root_dir = jdtls.setup.find_root(root_markers)
+                local home = os.getenv("HOME")
+                local project_name = vim.fn.fnamemodify(root_dir, ":p:h:t")
+                local workspace_dir = home .. "/.cache/jdtls/workspace/" .. project_name
+                opts.cmd = {
+                    jdtls_bin,
+                    "-data",
+                    workspace_dir,
+                }
+                local on_attach = function(client, bufnr)
+                    jdtls.setup.add_commands() -- important to ensure you can update configs when build is updated
+                    -- if you setup DAP according to https://github.com/mfussenegger/nvim-jdtls#nvim-dap-configuration you can uncomment below
+                    -- jdtls.setup_dap({ hotcodereplace = "auto" })
+                    -- jdtls.dap.setup_dap_main_class_configs()
+                    -- you may want to also run your generic on_attach() function used by your LSP config
+                end
+                opts.on_attach = on_attach
+                opts.capabilities = vim.lsp.protocol.make_client_capabilities()
+
+                require('jdtls').start_or_attach(opts)
+                require('jdtls').setup_dap()
+            end,
+        },
+        {
+            'mfussenegger/nvim-dap-python',
+            dependencies = {
+                'mfussenegger/nvim-dap',
+            },
+            config = function()
+            end,
+        },
+        {
+            'mfussenegger/nvim-dap',
+            dependencies = {
+                'rcarriga/nvim-dap-ui',
+                'theHamsta/nvim-dap-virtual-text',
+                'nvim-telescope/telescope.nvim',
+                'nvim-telescope/telescope-dap.nvim',
+            },
+            config = function()
+                require('telescope').load_extension('dap')
+                -- vim.keymap.set('n', '<leader>fd', builtin.help_tags, {})
+            end,
         },
     },
     {}
